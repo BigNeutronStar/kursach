@@ -1,6 +1,6 @@
-#include "s21_decimal.h"
+#include "decimal.h"
 
-int s21_from_decimal_to_float(s21_decimal src, float *dst) {
+int s21_from_decimal_to_float(decimal src, float *dst) {
   int status = 0;
   *dst = 0;
   if (dst == NULL) {
@@ -24,7 +24,7 @@ int s21_from_decimal_to_float(s21_decimal src, float *dst) {
   return status;
 }
 
-int s21_from_decimal_to_int(s21_decimal src, int *dst) {
+int s21_from_decimal_to_int(decimal src, int *dst) {
   int status = 0;
   if (dst) {
     if (s21_get_sign(src) == 1) {
@@ -38,7 +38,7 @@ int s21_from_decimal_to_int(s21_decimal src, int *dst) {
   return status;
 }
 
-int s21_from_float_to_decimal(float src, s21_decimal *dst) {
+int s21_from_float_to_decimal(float src, decimal *dst) {
   int status = 0;
   if (fabs(src) < 2e-28) {
     s21_clear_decimal(dst);
@@ -71,7 +71,7 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
   return status;
 }
 
-int s21_from_int_to_decimal(int src, s21_decimal *dst) {
+int s21_from_int_to_decimal(int src, decimal *dst) {
   int status = 0;
   if (abs(src) > s21_MAXDEC) {
     status = 1;

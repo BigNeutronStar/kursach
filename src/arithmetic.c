@@ -1,8 +1,8 @@
-#include "s21_decimal.h"
+#include "decimal.h"
 
-int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  s21_decimal ten;
-  s21_decimal valueBuff;
+int s21_add(decimal value_1, decimal value_2, decimal *result) {
+  decimal ten;
+  decimal valueBuff;
   s21_clear_decimal(result);
   s21_from_float_to_decimal(10, &ten);
   int remainder = 0;
@@ -28,11 +28,11 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   } else {
     if (exp != 0 && exp1 != exp2) {
       if (exp1 < exp) {
-        s21_decimal_pow(&ten, exp - 1 - exp1);
+        decimal_pow(&ten, exp - 1 - exp1);
         s21_mul(value_1, ten, &valueBuff);
         s21_copy_to_buffer(valueBuff, &value_1);
       } else if (exp2 < exp) {
-        s21_decimal_pow(&ten, exp - 1 - exp2);
+        decimal_pow(&ten, exp - 1 - exp2);
         s21_mul(value_2, ten, &valueBuff);
         s21_copy_to_buffer(valueBuff, &value_2);
       }
@@ -59,10 +59,10 @@ int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   return status;
 }
 
-int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  s21_decimal ten;
-  s21_decimal valueBuff;
-  s21_decimal one = {{1, 0, 0, 0}};
+int s21_sub(decimal value_1, decimal value_2, decimal *result) {
+  decimal ten;
+  decimal valueBuff;
+  decimal one = {{1, 0, 0, 0}};
   s21_clear_decimal(&valueBuff);
   s21_from_float_to_decimal(10, &ten);
   s21_clear_decimal(result);
@@ -86,12 +86,12 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   } else {
     if (exp != 0 && exp1 != exp2) {
       if (exp1 < exp) {
-        s21_decimal_pow(&ten, exp - 1 - exp1);
+        decimal_pow(&ten, exp - 1 - exp1);
         s21_mul(value_1, ten, &valueBuff);
         s21_copy_to_buffer(valueBuff, &value_1);
         exp1 = exp;
       } else if (exp2 < exp) {
-        s21_decimal_pow(&ten, exp - 1 - exp2);
+        decimal_pow(&ten, exp - 1 - exp2);
         s21_mul(value_2, ten, &valueBuff);
         s21_copy_to_buffer(valueBuff, &value_2);
         exp2 = exp;
@@ -126,16 +126,16 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   return status;
 }
 
-int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  s21_decimal R;
-  s21_decimal zero = {{0, 0, 0, 0}};
+int s21_mod(decimal value_1, decimal value_2, decimal *result) {
+  decimal R;
+  decimal zero = {{0, 0, 0, 0}};
   s21_clear_decimal(&R);
-  s21_decimal ten;
-  s21_decimal valueBuff;
+  decimal ten;
+  decimal valueBuff;
   s21_clear_decimal(&valueBuff);
   s21_from_float_to_decimal(10, &ten);
   int bit;
-  s21_decimal divBuffer;
+  decimal divBuffer;
   s21_clear_decimal(&divBuffer);
   s21_clear_decimal(result);
 
@@ -155,12 +155,12 @@ int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
 
   if (exp != 0 && exp1 != exp2) {
     if (exp1 < exp) {
-      s21_decimal_pow(&ten, exp - 1 - exp1);
+      decimal_pow(&ten, exp - 1 - exp1);
       s21_mul(value_1, ten, &valueBuff);
       s21_copy_to_buffer(valueBuff, &value_1);
       exp1 = exp;
     } else if (exp2 < exp) {
-      s21_decimal_pow(&ten, exp - 1 - exp2);
+      decimal_pow(&ten, exp - 1 - exp2);
       s21_mul(value_2, ten, &valueBuff);
       s21_copy_to_buffer(valueBuff, &value_2);
       exp2 = exp;
@@ -193,14 +193,14 @@ int s21_mod(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   return status;
 }
 
-int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
+int s21_mul(decimal value_1, decimal value_2, decimal *result) {
   int bit;
-  s21_decimal mulBuffer;
-  s21_decimal zero = {{0, 0, 0, 0}};
+  decimal mulBuffer;
+  decimal zero = {{0, 0, 0, 0}};
   s21_clear_decimal(&mulBuffer);
   s21_clear_decimal(result);
   s21_copy_to_buffer_no_exp(value_2, &mulBuffer);
-  s21_decimal resultBuffer;
+  decimal resultBuffer;
   s21_clear_decimal(&resultBuffer);
   int sign1 = s21_get_sign(value_1);
   int sign2 = s21_get_sign(value_2);
@@ -232,16 +232,16 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   }
   return status;
 }
-int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
-  s21_decimal R;
-  s21_decimal zero = {{0, 0, 0, 0}};
+int s21_div(decimal value_1, decimal value_2, decimal *result) {
+  decimal R;
+  decimal zero = {{0, 0, 0, 0}};
   s21_clear_decimal(&R);
-  s21_decimal ten;
-  s21_decimal valueBuff;
+  decimal ten;
+  decimal valueBuff;
   s21_clear_decimal(&valueBuff);
   s21_from_float_to_decimal(10, &ten);
   int bit;
-  s21_decimal divBuffer;
+  decimal divBuffer;
   s21_clear_decimal(&divBuffer);
   s21_clear_decimal(result);
 
@@ -262,12 +262,12 @@ int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
 
   if (exp != 0 && exp1 != exp2) {
     if (exp1 < exp) {
-      s21_decimal_pow(&ten, exp - 1 - exp1);
+      decimal_pow(&ten, exp - 1 - exp1);
       s21_mul(value_1, ten, &valueBuff);
       s21_copy_to_buffer(valueBuff, &value_1);
       exp1 = exp;
     } else if (exp2 < exp) {
-      s21_decimal_pow(&ten, exp - 1 - exp2);
+      decimal_pow(&ten, exp - 1 - exp2);
       s21_mul(value_2, ten, &valueBuff);
       s21_copy_to_buffer(valueBuff, &value_2);
       exp2 = exp;

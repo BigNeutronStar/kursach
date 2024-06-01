@@ -1,8 +1,8 @@
-#include "s21_decimal.h"
+#include "decimal.h"
 
-int s21_is_equal(s21_decimal a, s21_decimal b) {
-  s21_decimal ten;
-  s21_decimal valueBuff;
+int s21_is_equal(decimal a, decimal b) {
+  decimal ten;
+  decimal valueBuff;
   s21_from_float_to_decimal(10, &ten);
   int exp1 = s21_get_exp(a);
   int exp2 = s21_get_exp(b);
@@ -13,11 +13,11 @@ int s21_is_equal(s21_decimal a, s21_decimal b) {
     exp = exp2;
   }
   if (exp1 < exp) {
-    s21_decimal_pow(&ten, exp - 1 - exp1);
+    decimal_pow(&ten, exp - 1 - exp1);
     s21_mul(a, ten, &valueBuff);
     s21_copy_to_buffer(valueBuff, &a);
   } else if (exp2 < exp) {
-    s21_decimal_pow(&ten, exp - 1 - exp2);
+    decimal_pow(&ten, exp - 1 - exp2);
     s21_mul(b, ten, &valueBuff);
     s21_copy_to_buffer(valueBuff, &b);
   }
@@ -26,13 +26,13 @@ int s21_is_equal(s21_decimal a, s21_decimal b) {
          s21_zero_decimal(a, b);
 }
 
-int s21_is_not_equal(s21_decimal a, s21_decimal b) {
+int s21_is_not_equal(decimal a, decimal b) {
   return s21_is_equal(a, b) == 0;
 }
 
-int s21_is_greater(s21_decimal a, s21_decimal b) {
-  s21_decimal ten;
-  s21_decimal valueBuff;
+int s21_is_greater(decimal a, decimal b) {
+  decimal ten;
+  decimal valueBuff;
   s21_from_float_to_decimal(10, &ten);
   int exp1 = s21_get_exp(a);
   int exp2 = s21_get_exp(b);
@@ -61,11 +61,11 @@ int s21_is_greater(s21_decimal a, s21_decimal b) {
 
   } else if (sign1 == sign2) {
     if (exp1 < exp) {
-      s21_decimal_pow(&ten, exp - 1 - exp1);
+      decimal_pow(&ten, exp - 1 - exp1);
       s21_mul(a, ten, &valueBuff);
       s21_copy_to_buffer(valueBuff, &a);
     } else if (exp2 < exp) {
-      s21_decimal_pow(&ten, exp - 1 - exp2);
+      decimal_pow(&ten, exp - 1 - exp2);
       s21_mul(b, ten, &valueBuff);
       s21_copy_to_buffer(valueBuff, &b);
     }
@@ -92,14 +92,14 @@ int s21_is_greater(s21_decimal a, s21_decimal b) {
   return result;
 }
 
-int s21_is_greater_or_equal(s21_decimal a, s21_decimal b) {
+int s21_is_greater_or_equal(decimal a, decimal b) {
   return s21_is_greater(a, b) || s21_is_equal(a, b);
 }
 
-int s21_is_less(s21_decimal a, s21_decimal b) {
+int s21_is_less(decimal a, decimal b) {
   return s21_is_greater(a, b) ^ 1 && s21_is_equal(a, b) == 0;
 }
 
-int s21_is_less_or_equal(s21_decimal a, s21_decimal b) {
+int s21_is_less_or_equal(decimal a, decimal b) {
   return s21_is_less(a, b) || s21_is_equal(a, b);
 }

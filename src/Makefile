@@ -4,8 +4,8 @@ GCOV_LIBS=--coverage
 BUILD_PATH=./
 SOURCES=s21_*.c
 HEAD=s21_math.h
-LIB_O=s21_decimal.o
-LIB_A=s21_decimal.a
+LIB_O=decimal.o
+LIB_A=decimal.a
 TEST=test.out
 
 CC_FLAGS = 
@@ -26,22 +26,22 @@ else ifeq ($(shell uname -s),Darwin)
 	REPORT = gcov s21_*.gcno > report.html && cat report.html
 endif
 
-all: clean s21_decimal.a
+all: clean decimal.a
 
 rebuild: clean all
 
-s21_decimal.a:clean  all_functions
-	ar -rv s21_decimal.a $(O_FILES) s21_decimal.h
-	ranlib s21_decimal.a
+decimal.a:clean  all_functions
+	ar -rv decimal.a $(O_FILES) decimal.h
+	ranlib decimal.a
 
-test: s21_decimal.a
-	gcc test.c $(GCCFLAGS) $(TESTFLAGS) -L. s21_decimal.a -o test
+test: decimal.a
+	gcc test.c $(GCCFLAGS) $(TESTFLAGS) -L. decimal.a -o test
 	./test
 
 gcov_report: all_functions_gcov
-	ar -rv s21_decimal.a $(O_FILES) s21_decimal.h
-	ranlib s21_decimal.a
-	gcc test.c $(GCCFLAGS) $(TESTFLAGS) -L. s21_decimal.a -o test
+	ar -rv decimal.a $(O_FILES) decimal.h
+	ranlib decimal.a
+	gcc test.c $(GCCFLAGS) $(TESTFLAGS) -L. decimal.a -o test
 	./test
 	$(REPORT)
 	make clean
