@@ -21,16 +21,16 @@ ifeq ($(shell uname -s),Linux)
 endif
 
 ifeq ($(shell uname -s),Linux)
-	REPORT = gcov hse_*.gcno && gcovr --html > report.html
+	REPORT = gcovr --html --html-details -o coverage_report.html --exclude "test.c" && xdg-open coverage_report.html
 else ifeq ($(shell uname -s),Darwin)
-	REPORT = gcov hse_*.gcno > report.html && cat report.html
+	REPORT = gcovr --html --html-details -o coverage_report.html --exclude "test.c" && open coverage_report.html
 endif
 
 all: clean hse_decimal.a
 
 rebuild: clean all
 
-hse_decimal.a: clean all_functions
+hse_decimal.a: all_functions
 	ar -rv hse_decimal.a $(O_FILES)
 	ranlib hse_decimal.a
 
@@ -41,7 +41,7 @@ test: hse_decimal.a
 gcov_report: all_functions_gcov
 	ar -rv hse_decimal.a $(O_FILES)
 	ranlib hse_decimal.a
-	gcc test.c $(GCCFLAGS) $(TESTFLAGS) -L. hse_decimal.a -o test
+	gcc test.c $(GCOVFLAGS) $(TESTFLAGS) -L. hse_decimal.a -o test
 	./test
 	$(REPORT)
 	make clean
@@ -54,10 +54,10 @@ style: clean
 	clang-format -n *.h
 
 all_functions:
-	gcc -c $(CC_FLAGS) hse_*.c
+	gcc -c $(CC_FLAGS) $(SOURCES)
 
 all_functions_gcov:
-	gcc -c $(CC_FLAGS) $(TESTFLAGS) hse_*.c
+	gcc -c $(CC_FLAGS) $(GCOVFLAGS) $(SOURCES)
 
 clean:
 	rm -rf *.o *.gch *.out *.gcno *.gcda *.info *.gcov *.a

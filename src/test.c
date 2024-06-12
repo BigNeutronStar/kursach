@@ -848,16 +848,16 @@ START_TEST(hse_from_int_to_decimal_1) {
 }
 END_TEST
 
-// START_TEST(hse_from_int_to_decimal_2) {
-//   int src = -2147483648;
-//   hse_decimal check = {{2147483648, 0, 0, 0}};
-//   setsign(&check, 1);
-//   hse_decimal result;
-//   int return_value = hse_from_int_to_decimal(src, &result);
-//   ck_assert_int_eq(hse_is_equal(result, check), 1);
-//   ck_assert_int_eq(return_value, SUCCESS);
-// }
-// END_TEST
+START_TEST(hse_from_int_to_decimal_2) {
+  int src = -2147483648;
+  hse_decimal check = {{2147483648, 0, 0, 0}};
+  setsign(&check, 1);
+  hse_decimal result;
+  int return_value = hse_from_int_to_decimal(src, &result);
+  ck_assert_int_eq(hse_is_equal(result, check), 1);
+  ck_assert_int_eq(return_value, SUCCESS);
+}
+END_TEST
 
 START_TEST(hse_from_int_to_decimal_3) {
   int src = -49135648;
@@ -1300,10 +1300,10 @@ Suite *lib_suite(void) {
   suite_add_tcase(s, tc_from_int_to_decimal_1);
   tcase_add_test(tc_from_int_to_decimal_1, hse_from_int_to_decimal_1);
 
-  // TCase *tc_from_int_to_decimal_2;
-  // tc_from_int_to_decimal_2 = tcase_create("hse_from_int_to_decimal_2");
-  // suite_add_tcase(s, tc_from_int_to_decimal_2);
-  // tcase_add_test(tc_from_int_to_decimal_2, hse_from_int_to_decimal_2);
+  TCase *tc_from_int_to_decimal_2;
+  tc_from_int_to_decimal_2 = tcase_create("hse_from_int_to_decimal_2");
+  suite_add_tcase(s, tc_from_int_to_decimal_2);
+  tcase_add_test(tc_from_int_to_decimal_2, hse_from_int_to_decimal_2);
 
   TCase *tc_from_int_to_decimal_3;
   tc_from_int_to_decimal_3 = tcase_create("hse_from_int_to_decimal_3");
